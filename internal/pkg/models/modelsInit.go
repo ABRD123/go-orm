@@ -12,7 +12,11 @@ func CreateTables(db *gorm.DB, logger *log.Logger) {
 	// Create tables
 	db.AutoMigrate(
 		&User{},
+		&Request{},
 	)
+
+	// Create foreign keys
+	db.Model(&Request{}).AddForeignKey("user_id", "users(id)", "RESTRICT", "CASCADE")
 
 	logger.Info("Tables created successfully.")
 }
@@ -25,13 +29,16 @@ func InitializeTables(db *gorm.DB, logger *log.Logger) {
 	// ====================================================
 	// ====================================================
 	if !configs.Live {
-		user := User{}
-		user.ID = 123456
-		user.Name = "abrdtest"
-		user.Active = true
-		db.Where(User{Name: user.Name}).FirstOrCreate(&user)
-
-		logger.Info("Test data initialized successfully.")
+		var user User
+		user.Name = "testuser"
+		if err := user.GetActiveUserName(true, "test", db); err != nil {
+			db.Create(&user)
+			req := Request{
+				User: user,
+			}
+			db.Create(&req)
+			logger.Info("Test data initialized successfully.")
+		}
 	}
 	// ====================================================
 }

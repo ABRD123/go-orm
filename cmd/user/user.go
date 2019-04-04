@@ -1,12 +1,13 @@
 package main
 
 import (
+	log "github.com/sirupsen/logrus"
+
 	"github.com/go-orm/configs"
 	"github.com/go-orm/internal/pkg/dbconnect"
 	"github.com/go-orm/internal/pkg/logutil"
 	"github.com/go-orm/internal/pkg/models"
 	"github.com/go-orm/internal/pkg/utils"
-	log "github.com/sirupsen/logrus"
 )
 
 func main() {

@@ -3,12 +3,13 @@ package models
 import (
 	"time"
 
+	"github.com/gofrs/uuid"
 	"github.com/jinzhu/gorm"
 )
 
-// User represents a users table.
+// User represents an users table.
 type User struct {
-	ID          int64      `gorm:"primary -key" json:"-"`
+	ID          int64      `gorm:"primary_key" json:"-"`
 	TimeCreated *time.Time `gorm:"default:CURRENT_TIMESTAMP; not null" json:"-"`
 	TimeUpdated *time.Time `json:"-"`
 	Name        string     `gorm:"type:varchar(128); unique; not null" json:"name"`
@@ -16,29 +17,30 @@ type User struct {
 }
 
 // BeforeCreate sets the TimeCreated and TimeUpdated before creating the record.
-func (u *User) BeforeCreate(scope *gorm.Scope) error {
-	_ = scope.SetColumn("time_created", time.Now().UTC())
-	_ = scope.SetColumn("time_updated", time.Now().UTC())
+func (user *User) BeforeCreate(scope *gorm.Scope) error {
+	imageUUID, _ := uuid.NewV4()
+	_ = scope.SetColumn("ID", imageUUID.String())
 	return nil
 }
 
 // BeforeSave sets the TimeUpdated before saving the record.
-func (u *User) BeforeSave(scope *gorm.Scope) error {
+func (user *User) BeforeSave(scope *gorm.Scope) error {
 	_ = scope.SetColumn("time_updated", time.Now().UTC())
 	return nil
 }
 
 // BeforeUpdate sets the TimeUpdated before updating the record.
-func (u *User) BeforeUpdate(scope *gorm.Scope) error {
+func (user *User) BeforeUpdate(scope *gorm.Scope) error {
 	_ = scope.SetColumn("time_updated", time.Now().UTC())
 	return nil
 }
 
-// Create inserts the User data into the users table and fills in the User ID.
-func (u *User) Create(db *gorm.DB) error {
-	if err := db.Create(&u).Error; err != nil {
+// Create inserts the user data into the users table and fills in the Image ID.
+func (user *User) Create(db *gorm.DB) error {
+	if err := db.Create(&user).Error; err != nil {
 		return err
 	}
+
 	return nil
 }
 

@@ -10,6 +10,14 @@
   version = "v1.4.1"
 
 [[projects]]
+  digest = "1:bed9d72d596f94e65fff37f4d6c01398074a6bb1c3f3ceff963516bd01db6ff5"
+  name = "github.com/gofrs/uuid"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "6b08a5c5172ba18946672b49749cde22873dd7c2"
+  version = "v3.2.0"
+
+[[projects]]
   digest = "1:d4e6e8584d0a94ce567d237e19192dae44d57d2767ac7e1d7fbf5626d176381a"
   name = "github.com/jinzhu/gorm"
   packages = ["."]
@@ -81,6 +89,7 @@
   analyzer-version = 1
   input-imports = [
     "github.com/go-sql-driver/mysql",
+    "github.com/gofrs/uuid",
     "github.com/jinzhu/gorm",
     "github.com/onrik/logrus/filename",
     "github.com/sirupsen/logrus",

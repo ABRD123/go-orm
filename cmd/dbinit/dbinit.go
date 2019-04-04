@@ -1,12 +1,13 @@
 package main
 
 import (
+	log "github.com/sirupsen/logrus"
+
 	"github.com/go-orm/configs"
 	"github.com/go-orm/internal/pkg/dbconnect"
 	"github.com/go-orm/internal/pkg/logutil"
 	"github.com/go-orm/internal/pkg/models"
 	"github.com/go-orm/internal/pkg/utils"
-	log "github.com/sirupsen/logrus"
 )
 
 func main() {
@@ -25,10 +26,4 @@ func main() {
 
 	models.CreateTables(db, logger)
 	models.InitializeTables(db, logger)
-
-	user := &models.User{}
-	user.ID = 123456
-	user.Name = "abrdtest321"
-	user.Active = true
-	db.Where(&models.User{Name: user.Name}).FirstOrCreate(&user)
 }
