@@ -49,7 +49,7 @@ func (user *User) Create(db *gorm.DB) error {
 //	param: userName is the User UserName
 func (user *User) GetActiveUserName(active bool, userName string, db *gorm.DB) error {
 	query := "active = ? and name = ?"
-	if err := db.Where(query, active, userName).Find(&u).Error; err != nil {
+	if err := db.Where(query, active, userName).Find(&user).Error; err != nil {
 		return err
 	}
 	return nil
@@ -59,7 +59,7 @@ func (user *User) GetActiveUserName(active bool, userName string, db *gorm.DB) e
 //	param: userName is the User UserName
 func (user *User) GetUserName(userName string, db *gorm.DB) error {
 	query := "name = ?"
-	if err := db.Where(query, userName).Find(&u).Error; err != nil {
+	if err := db.Where(query, userName).Find(&user).Error; err != nil {
 		return err
 	}
 	return nil
@@ -68,7 +68,7 @@ func (user *User) GetUserName(userName string, db *gorm.DB) error {
 // UpdateActive updates the User Active value in the DB.
 //	param: active is the User Active
 func (user *User) UpdateActive(active bool, db *gorm.DB) error {
-	if err := db.Model(u).Update("active", active).Error; err != nil {
+	if err := db.Model(user).Update("active", active).Error; err != nil {
 		return err
 	}
 	return nil
